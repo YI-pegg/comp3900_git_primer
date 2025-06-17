@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './App.css'; // 确保有这个文件或删除这行
 
-
 const api = axios.create({
   baseURL: 'http://localhost:5001',
   timeout: 5000,
@@ -31,8 +30,9 @@ function App() {
 
   return (
     <div className="app-container">
+      <h1>Welcome to COMP3900 and COMP9900</h1> {/* 新增欢迎语 */}
       <h2>React ↔ Flask 通信测试</h2>
-      
+
       <div className="input-group">
         <input
           type="text"
