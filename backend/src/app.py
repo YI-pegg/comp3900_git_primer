@@ -17,7 +17,6 @@ CORS(app,
 
 @app.after_request
 def after_request(response):
-    # 动态设置允许的源
     origin = request.headers.get('Origin')
     if origin and origin in ['http://localhost:3000', 'http://localhost:3001', 'http://192.168.50.214:3000']:
         response.headers.add('Access-Control-Allow-Origin', origin)
@@ -39,6 +38,18 @@ def handle_message():
         "response": f"Flask received: {message}",
         "status": "success"
     })
+
+# ✅ 新增计算器接口
+@app.route('/api/calculate', methods=['POST'])
+def calculate():
+    data = request.get_json()
+    try:
+        num1 = int(data.get('num1', 0))
+        num2 = int(data.get('num2', 0))
+        result = num1 + num2  # 修复了错误，原来是乘法 *
+        return jsonify({'result': result})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)
